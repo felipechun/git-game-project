@@ -4,15 +4,21 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Dancing Sensei</title>
+        <title>Afro Sensei</title>
 
         <link rel="stylesheet" href="css/style.css">
+        <link href="https://fonts.googleapis.com/css?family=Mali:400,700&display=swap" rel="stylesheet">
     </head>
     <body>
-      <button onclick="startGame()">Start Game</button>
+      <canvas id="my-canvas" width="1000" height="550"></canvas>
+      <h1>AFRO SENSEI</h1>
+      <p>Welcome to my dojo! You may look the part but let's see what yo really made of!
+        All ya gotta do is follow ma groovin' moves, but one mistake and you're out!
+        To dance, put them arrow keys to good use! Are ya ready to BOOGIE?!
+      </p>
+      <button onclick="startGame()">LET'S BOOGIE!</button>
       <!-- the magic happens inside this tag - 
           it's HTML5 tag that supports animation -->
-      <canvas id="my-canvas" width="1000" height="500"></canvas>
         
       <!-- include js file after DOM is loaded; 
           if included earlier, you have to use window.onload = function(){ ... } 

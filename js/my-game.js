@@ -7,12 +7,15 @@ let level = 0;
 // ctx.fillStyle = 'red';
 // ctx.fillRect(100, 100, 50, 50)
 
-let teacherArr = [37, 38, 39, 40];
+let teacherArr = [37, 38, 39];
 let studentArr = [];
 let arrPos = 0;
 let teacherInterval;
 let refreshInterval;
+let printBgInterval;
+let score = 0;
 
+const dance = new Audio('sounds/game-mp3s/dance.mp3');
 const bgm = new Audio('sounds/game-mp3s/billie-jean.mp3');
 const gg = new Audio('sounds/game-mp3s/game-over.mp3');
 const mjWoo = new Audio('sounds/game-mp3s/mj-woo.mp3');
@@ -53,9 +56,9 @@ const checkMove = () => {
     console.log(`teacher: ${teacherArr}`, `student: ${studentArr}`);
     console.log('Groovy!');
     soundsArr[dancePos].play();
-    // soundsArr[Math.floor(Math.random() * 12)].play();
-    // mjArr[Math.floor(Math.random() * 4)].play();
     dancePos += 1;
+    score += 10;
+    scoreText(score);
     if (teacherArr.length === studentArr.length) {
       groovy();
       console.log(teacherArr);
@@ -71,29 +74,18 @@ const checkMove = () => {
         setTimeout(nextLevel(), 4000);
         setTimeout(clearSLight, 4000);
       }
-      console.log('my level is:', level);
-      console.log('I see you\'ve got some moves... Well then how about THIS?');
     }
   } else {
-    console.log('you are not ready!');
     return gameOver();
   }
 };
 
 const clearStudent = () => {
   ctx.clearRect(625, 100, 150, 250);
-  // ctx.fillRect(100, 100, 50, 50);
 };
 
 const clearTeacher = () => {
   ctx.clearRect(200, 10, 150, 340);
-};
-
-
-const groovy = () => {
-  const groovyImg = new Image();
-  groovyImg.src = 'images/groovy.png';
-  groovyImg.onload = () => ctx.drawImage(groovyImg, 625, 0, 150, 150);
 };
 
 const clearTLight = () => {
@@ -104,6 +96,60 @@ const clearTLight = () => {
 const clearSLight = () => {
   ctx.clearRect(470, 260, 160, 89);
   ctx.clearRect(780, 260, 160, 89);
+};
+
+const groovy = () => {
+  const groovyImg = new Image();
+  groovyImg.src = 'images/groovy.png';
+  groovyImg.onload = () => ctx.drawImage(groovyImg, 625, 0, 150, 150);
+};
+
+const discoLine = () => {
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = '#f700ff';
+  ctx.beginPath();
+  ctx.moveTo(485, 0);
+  ctx.lineTo(485, 54);
+  ctx.stroke();
+  ctx.closePath();
+};
+
+const scoreText = (thescore) => {
+  ctx.clearRect(620, 0, 200, 100);
+  ctx.font = '20px Mali';
+  ctx.fillStyle = 'white';
+  ctx.fillText(`Groove Level: ${thescore}`, 620, 25);
+  ctx.fillStyle = 'black';
+};
+
+const lvl1Text = () => {
+  ctx.font = '30px Mali';
+  ctx.fillText('Afro Sensei: Ya ready? JAMON!', 145, 440);
+};
+
+const lvl2Text = () => {
+  ctx.font = '20px Mali';
+  ctx.fillText('Afro Sensei: Heh, that was just a warmup. The real test begins NOW!', 145, 435);
+};
+
+const lvl3Text = () => {
+  ctx.font = '28px Mali';
+  ctx.fillText('Afro Sensei: Impressive... well how about THIS?!', 145, 440);
+};
+
+const lvl4Text = () => {
+  ctx.font = '22px Mali';
+  ctx.fillText("Afro Sensei: No mo holdin' back. I call this the TRIPLE J MCFUNK!", 140, 435);
+};
+
+const gameOverText = () => {
+  ctx.font = '30px Mali';
+  ctx.fillText("Ya got some moves but ya don't got the groove!", 225, 395);
+};
+
+const youWinText = () => {
+  ctx.font = '30px Mali';
+  ctx.fillText('Wow! MJ would be proud. Groove on brotha!', 260, 395);
 };
 
 const teacherLight = () => {
@@ -126,14 +172,16 @@ const studentLight = () => {
   lightSR.onload = () => ctx.drawImage(lightSR, 780, 260, 160, 89);
 };
 
-const discoLine = () => {
-  ctx.lineWidth = 2;
-  ctx.strokeStyle = '#f700ff';
-  ctx.beginPath();
-  ctx.moveTo(485, 0);
-  ctx.lineTo(485, 54);
-  ctx.stroke();
-  ctx.closePath();
+const textBubble = () => {
+  const rectangle = new Image();
+  rectangle.src = 'images/speech-bubble_A3.png';
+  rectangle.onload = () => ctx.drawImage(rectangle, 120, 380, 740, 100);
+};
+
+const ggBubble = () => {
+  const gameOverBubble = new Image();
+  gameOverBubble.src = 'images/speech-bubble_A1.png';
+  gameOverBubble.onload = () => ctx.drawImage(gameOverBubble, 210, 290, 740, 150);
 };
 
 const discoBall = () => {
@@ -146,11 +194,9 @@ const printBg = () => {
   const bgImg = new Image();
   bgImg.src = 'images/dance-floor-fade.png';
   bgImg.onload = () => ctx.drawImage(bgImg, 0, 0, 1000, 550);
-  setTimeout(discoBall, 100);
-  setTimeout(discoLine, 200);
-  // setTimeout(studentLight, 100);
+  discoBall();
+  discoLine();
 };
-
 
 const defaultPos = () => {
   const defaultImg = new Image();
@@ -262,50 +308,48 @@ const printTeacherDance = () => {
 };
 
 printBg();
-setTimeout(defaultTeacherPos, 100);
-setTimeout(defaultPos, 100);
-
+defaultTeacherPos();
+defaultPos();
 
 const makeTeacherDance = () => {
-  // countIn.play();
+  ctx.clearRect(0, 350, 1000, 250);
+  printBg();
   teacherInterval = setInterval(printTeacherDance, 1050);
 };
 
-// const updateEverything = () => {
-//   ctx.clearRect(0, 0, 1000, 500);
-//   printBg();
-//   refreshInterval = setInterval(updateEverything, 20);
-// }
+const makeTeacherDanceFaster = () => {
+  ctx.clearRect(0, 350, 1000, 250);
+  printBg();
+  teacherInterval = setInterval(printTeacherDance, 525);
+};
 
 const startGame = () => {
+  dance.play();
   bgm.play();
   ctx.clearRect(0, 0, 1000, 550);
   printBg();
-  // updateEverything();
-  setTimeout(defaultTeacherPos, 100);
-  setTimeout(defaultPos, 100);
   teacherArr = [37, 38, 39, 40];
-  studentArr = [];
-  arrPos = 0;
-  dancePos = 0;
+  score = 0;
   level = 0;
+  resetValues();
   clearSLight();
-  // setTimeout(playCountIn, 2000);
+  textBubble();
+  setTimeout(lvl1Text, 100);
   setTimeout(teacherLight, 4150);
   setTimeout(makeTeacherDance, 3100);
 };
 
-const ggBubble = () => {
-  const gameOverBubble = new Image();
-  gameOverBubble.src = 'images/speech-bubble_A1.png';
-  gameOverBubble.onload = () => ctx.drawImage(gameOverBubble, 210, 290, 740, 150);
+const resetValues = () => {
+  // clearTimeout(danceTeacher);
+  ctx.clearRect(625, 25, 250, 250);
+  studentArr = [];
+  arrPos = 0;
+  dancePos = 0;
+  clearStudent();
+  clearTeacher();
+  defaultPos();
+  defaultTeacherPos();
 };
-
-const gameOverText = () => {
-  ctx.fillText("Ya got some moves but ya don't got the groove!", 225, 395);
-};
-
-const youWinText = () => ctx.fillText('Wow! MJ would be proud. Groove on brotha!', 260, 395);
 
 const gameOver = () => {
   clearInterval(refreshInterval);
@@ -321,45 +365,32 @@ const gameOver = () => {
 };
 
 const levelTwo = () => {
-  ctx.clearRect(625, 0, 150, 150);
-  teacherArr = [40, 37, 40, 39, 38, 37];
-  studentArr = [];
-  arrPos = 0;
-  dancePos = 0;
-  clearStudent();
-  clearTeacher();
-  defaultPos();
-  defaultTeacherPos();
+  teacherArr = [40, 37, 40, 39, 38];
+  resetValues();
+  textBubble();
+  setTimeout(lvl2Text, 20);
   setTimeout(teacherLight, 4150);
   setTimeout(makeTeacherDance, 3100);
 };
 
 const levelThree = () => {
-  ctx.clearRect(625, 0, 150, 150);
   teacherArr = [39, 38, 40, 37, 38, 39];
-  studentArr = [];
-  arrPos = 0;
-  dancePos = 0;
-  clearStudent();
-  clearTeacher();
-  defaultPos();
-  defaultTeacherPos();
+  resetValues();
+  textBubble();
+  setTimeout(lvl3Text, 20);
   setTimeout(teacherLight, 4150);
   setTimeout(makeTeacherDance, 3100);
+  // setTimeout(makeTeacherDanceFaster, 3625);
 };
 
 const levelFour = () => {
-  ctx.clearRect(625, 0, 150, 150);
-  teacherArr = [37, 38, 40, 37, 39, 40, 37, 40];
-  studentArr = [];
-  arrPos = 0;
-  dancePos = 0;
-  clearStudent();
-  clearTeacher();
-  defaultPos();
-  defaultTeacherPos();
+  teacherArr = [37, 38, 40, 37, 39, 40, 37, 38];
+  resetValues();
+  textBubble();
+  setTimeout(lvl4Text, 20);
   setTimeout(teacherLight, 4150);
   setTimeout(makeTeacherDance, 3100);
+  // setTimeout(makeTeacherDanceFaster, 3625);
 };
 
 const youWin = () => {
@@ -375,11 +406,9 @@ const youWin = () => {
   congrats.play();
 };
 
-let levelArr = ['first level', levelTwo, levelThree, levelFour];
-
+const levelArr = ['first level', levelTwo, levelThree, levelFour];
 
 const nextLevel = () => {
-  // ctx.clearRect(625, 0, 150, 150);
   level += 1;
   return levelArr[level];
 };

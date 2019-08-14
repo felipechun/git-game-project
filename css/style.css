@@ -12,20 +12,16 @@ button {
   font-size: 20px;
   border: 4px solid rgb(247, 0, 255); 
   border-radius: 40px;
-  /* float: left; */
 }
 
 canvas {
   float: right;
-  /* border: 3px solid white; */
-  /* margin-left: 130px; */
 }
 
 h1 {
   margin-top: 20px;
   margin-bottom: 20px;
   text-align: center;
-  /* display: inline-block; */
   color: rgb(247, 0, 255);
 }
 
@@ -34,7 +30,6 @@ p {
   line-height: 2em;
   text-align: center;
   margin-left: 8px;
-  /* display: inline-block; */
   color: rgb(247, 0, 255);
   width: 250px;
   height: auto;

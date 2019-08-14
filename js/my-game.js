@@ -1,6 +1,6 @@
 
 const canvas = document.getElementById('my-canvas');
-let ctx = canvas.getContext('2d');
+const ctx = canvas.getContext('2d');
 ctx.font = '30px Mali';
 let level = 0;
 
@@ -12,7 +12,6 @@ let studentArr = [];
 let arrPos = 0;
 let teacherInterval;
 let refreshInterval;
-let printBgInterval;
 let score = 0;
 
 const dance = new Audio('sounds/game-mp3s/dance.mp3');
@@ -38,8 +37,7 @@ const a = new Audio('sounds/game-mp3s/A.mp3');
 const bb = new Audio('sounds/game-mp3s/Bb.mp3');
 const b = new Audio('sounds/game-mp3s/B.mp3');
 const cTwo = new Audio('sounds/game-mp3s/C2.mp3');
-let soundsArr = [cOne, d, eb, f, g, ab, a, b, cTwo];
-let mjArr = [mjWoo, mjShook, mjHee, mjBaraba];
+const soundsArr = [cOne, d, eb, f, g, ab, a, b, cTwo];
 
 const playSuccess = () => {
   success.play();
@@ -53,15 +51,12 @@ const playBgm = () => bgm.play();
 let dancePos = 0;
 const checkMove = () => {
   if (studentArr[dancePos] === teacherArr[dancePos]) {
-    console.log(`teacher: ${teacherArr}`, `student: ${studentArr}`);
-    console.log('Groovy!');
     soundsArr[dancePos].play();
     dancePos += 1;
     score += 10;
     scoreText(score);
     if (teacherArr.length === studentArr.length) {
       groovy();
-      console.log(teacherArr);
       bgm.pause();
       bgm.currentTime = 0;
       setTimeout(playSuccess, 1500);
@@ -280,7 +275,7 @@ const upTeacherPos = () => {
 
 const printTeacherDance = () => {
   switch (teacherArr[arrPos]) {
-    case 38: //up arrow
+    case 38: // up arrow
       clearTeacher();
       upTeacherPos();
       break;
@@ -340,7 +335,6 @@ const startGame = () => {
 };
 
 const resetValues = () => {
-  // clearTimeout(danceTeacher);
   ctx.clearRect(625, 25, 250, 250);
   studentArr = [];
   arrPos = 0;
@@ -380,7 +374,6 @@ const levelThree = () => {
   setTimeout(lvl3Text, 20);
   setTimeout(teacherLight, 4150);
   setTimeout(makeTeacherDance, 3100);
-  // setTimeout(makeTeacherDanceFaster, 3625);
 };
 
 const levelFour = () => {
@@ -390,7 +383,6 @@ const levelFour = () => {
   setTimeout(lvl4Text, 20);
   setTimeout(teacherLight, 4150);
   setTimeout(makeTeacherDance, 3100);
-  // setTimeout(makeTeacherDanceFaster, 3625);
 };
 
 const youWin = () => {
